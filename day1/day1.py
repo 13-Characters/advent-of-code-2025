@@ -11,6 +11,11 @@ def part_1(input):
             password += 1
     return password
 
+def increment(dial, amount):
+    if amount < 0:
+        dial = (-dial) % 100
+        amount = -amount
+    return (dial + amount) // 100
 def part_2(input):
     dial = 50
     password = 0
@@ -19,8 +24,11 @@ def part_2(input):
         amount = int(amount)
         if direction == "L":
             amount = -amount
+        if dial == 0:
+            password += increment(dial, amount)
+        else:
+            password += increment(dial, amount)
         dial += amount
-        password += abs(dial // 100)
         dial = dial % 100
         print(line.strip(), dial, password)
     return password
