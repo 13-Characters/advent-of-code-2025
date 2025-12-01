@@ -1,0 +1,29 @@
+def part_1(input):
+    dial = 50
+    password = 0
+    for line in open(input):
+        direction, amount = line[0], line[1:]
+        if direction == "L":
+            dial = (dial - int(amount)) % 100
+        if direction == "R":
+            dial = (dial + int(amount)) % 100
+        if dial == 0:
+            password += 1
+    return password
+
+def part_2(input):
+    dial = 50
+    password = 0
+    for line in open(input):
+        direction, amount = line[0], line[1:]
+        amount = int(amount)
+        if direction == "L":
+            amount = -amount
+        dial += amount
+        password += abs(dial // 100)
+        dial = dial % 100
+        print(line.strip(), dial, password)
+    return password
+
+print(part_1("input"))
+print(part_2("input"))

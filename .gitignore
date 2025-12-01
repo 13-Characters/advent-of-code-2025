@@ -1,3 +1,6 @@
+# Input for Advent of Code
+input
+input.txt
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
