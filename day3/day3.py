@@ -13,8 +13,6 @@ def part_1(file_name):
 n = 12
 digits = [9, 8, 7, 6, 5, 4, 3, 2, 1]
 def biggest(line, n):
-    if len(line) == 1:
-        return int(line)
     for digit in digits:
         if (s:=str(digit)) in line and len(subline:=line[line.find(s)+1:]) >= n-1:
             if n <= 1:
