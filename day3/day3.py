@@ -10,7 +10,6 @@ def part_1(file_name):
         result += mx
     return result
 
-n = 12
 digits = [9, 8, 7, 6, 5, 4, 3, 2, 1]
 def biggest(line, n):
     for digit in digits:
