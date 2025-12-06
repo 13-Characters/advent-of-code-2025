@@ -33,5 +33,6 @@ def part_2(input):
         print(line.strip(), dial, password)
     return password
 
-print(part_1("input"))
-print(part_2("input"))
+if __name__ == "__main__":
+    print(part_1("input"))
+    print(part_2("input"))
