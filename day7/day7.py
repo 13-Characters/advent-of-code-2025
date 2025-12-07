@@ -4,26 +4,31 @@ def parse(fp):
     splitters = list(filter(bool, splitters))
     start = lines[0].find("S")
     return start, splitters
-def split(beams, row):
+def split(beams, row, quantum=False):
     new_beams = []
     split_count = 0
     for splitter in row:
         if splitter in beams:
             new_beams.extend([splitter-1, splitter+1])
-            split_count += 1
-    new_beams = set(new_beams) | set(beam for beam in beams if beam not in row)
+            split_count += 1 if not quantum else 0
+    if quantum:
+        new_beams = new_beams + [beam for beam in beams if beam not in row]
+    else:
+        new_beams = set(new_beams) | set(beam for beam in beams if beam not in row)
+
     return new_beams, split_count
-def calculate_total_splits(start, splitters):
+def calculate_total_splits(start, splitters, quantum=False):
     beams = [start]
     result = 0
     for row in splitters:
-        print("".join(["|" if i in beams else "." for i in range(141)]))
-        print("".join(["^" if i in row else ("|" if i in beams else ".") for i in range(141)]))
-        beams, split_count = split(beams, row)
+        beams, split_count = split(beams, row, quantum=quantum)
         result += split_count
-    return result
+    return result if not quantum else len(beams)
 def part_1(fp):
     return calculate_total_splits(*(parse(fp)))
+def part_2(fp):
+    return calculate_total_splits(*(parse(fp)), quantum=True)
 
 if __name__ == "__main__":
     print(part_1("input"))
+    print(part_2("example_input"))
