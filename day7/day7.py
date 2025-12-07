@@ -21,9 +21,7 @@ def split_quantum(beams: Counter, row):
             new_beams[beam-1] += beams[beam]
             new_beams[beam+1] += beams[beam]
         if beam not in row:
-            new_beams[beam] = beams[beam]
-
-
+            new_beams[beam] += beams[beam]
     return new_beams, 0
 def calculate_total_splits(start, splitters, quantum=False):
     beams = Counter({start:1}) if quantum else [start]
@@ -40,4 +38,4 @@ def part_2(fp):
 
 if __name__ == "__main__":
     print(part_1("input"))
-    print(part_2("example_input"))
+    print(part_2("input"))
