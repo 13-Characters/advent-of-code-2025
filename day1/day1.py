@@ -30,7 +30,6 @@ def part_2(input):
             password += increment(dial, amount)
         dial += amount
         dial = dial % 100
-        print(line.strip(), dial, password)
     return password
 
 if __name__ == "__main__":
