@@ -95,22 +95,25 @@ def part_2_fast(fp):
 
     # Fill the inside
     for y in range(size[1]):
-        fill = False
-        for x in range(0, size[1] - 1):
-            if fill:
-                inside[x,y] = True
-            if inside[x,y]:
-                fill = not inside[x+1,y]
+        start = -1
+        for x in range(1, size[1] - 1):
+            if inside[x, y]:
+                start = x
+            if inside[x+1, y]:
+                end = x+1
+                if end-start > 1 and start > 0:
+                    for i in range(start,end):
+                        inside[i,y] = True
 
     for key in keys_to_check:
         i,j = key
         a,b = points[i], points[j]
+        aa, bb = points_uncompressed[i], points_uncompressed[j]
         x_left, x_right = min(a[0], b[0]), max(a[0], b[0])
         y_up, y_down = min(a[1], b[1]), max(a[1], b[1])
-        for x in x_values:
-            for y in y_values:
-                pass
+        if all(inside[x,y] for x in range(x_left,x_right+1) for y in range(y_up,y_down+1)):
+            return area(aa,bb)
 
 if __name__ == "__main__":
     print(part_1("input"))
-    print(part_2("input"))
+    print(part_2_fast("input"))
