@@ -39,24 +39,36 @@ def part_2(fp):
     for key in keys_to_check:
         i,j = key
         a,b = points[i], points[j]
+        if (9,5) in [a,b]:
+            pass
         x_left, x_right = min(a[0], b[0]), max(a[0], b[0])
         y_up, y_down = min(a[1], b[1]), max(a[1], b[1])
 
-        x_values = [point[0] for point in points if point[0] in range(x_left, x_right+1)]
-        x_values = set((x+y)//2 for x,y in zip(x_values[0:-1],x_values[1:]))
-        y_values = [point[1] for point in points if point[1] in range(y_up, y_down+1)]
-        y_values = set((x + y) // 2 for x, y in zip(y_values[0:-1], y_values[1:]))
-
-        good = True
-        for x in x_values:
-            if not is_inside((x, y_up), points) or not is_inside((x, y_down), points):
-                good = False
-        for y in y_values:
-            if not is_inside((x_left, y), points) or not is_inside((x_right, y), points):
-                good = False
-        if good:
+        for p1,p2 in zip(points, points[1:]+[points[0]]):
+            dx,dy = tuple(y-x for x,y in zip(p1,p2))
+            x,y = p2
+            if y_up<y<y_down:
+                if dx>0:
+                    # Cross the left edge of rectangle
+                    if p2[0]>x_left and p1[0]<x_left:
+                        break
+                if dx<0:
+                    # Cross the right edge of rectangle
+                    if p2[0]<x_right:
+                        break
+            if x_left<x<x_right:
+                if dy>0:
+                    # Cross the upper edge of rectangle
+                    if p2[1]>y_up and p1[1]<y_up:
+                        break
+                if dy<0:
+                    # Cross the lower edge of rectangle
+                    if p2[1]<y_down and p1[1]>y_up:
+                        break
+        else:
+            print(a,b)
             return area(a,b)
 
 if __name__ == "__main__":
     print(part_1("input"))
-    print(part_2("input"))
+    print(part_2("example_input"))
